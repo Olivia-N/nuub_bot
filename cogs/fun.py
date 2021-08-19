@@ -23,6 +23,7 @@ class Fun(commands.Cog):
     @commands.command(help='Get information on a country')
     async def country(self, ctx, *, name):
         x = requests.get(f'https://restcountries.eu/rest/v2/name/{name}?fullText=true')
+
         y = x.json()[0]
         em = discord.Embed(title=name)
         code1 = y['alpha2Code']
@@ -40,9 +41,10 @@ class Fun(commands.Cog):
         em.add_field(name='Currency:', value=f'{currency}, {currency2}')
         language = y['languages'][0]['name']
         em.add_field(name='Languages:', value=f'{language}')
-        image = y['flag']
-        em.set_image(url=image)
+        flag = f'https://www.countryflags.io/{callcode}/flat/64.png'
+        em.set_image(url=flag)
         await ctx.send(embed=em)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
